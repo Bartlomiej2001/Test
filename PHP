@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <aside>
+        <form class="a" action="insert.php" method="POST">
+        <input type="text" name = "imie">
+        <input type="text" name = "zarobki">
+        <input type="text" name="dzial" >
+        <input type="date" name="data" >
+        <input type="submit" value="dodaj Pracownika">
+        </form>
+</aside>
+    <main>
+        <?php
+        $conn = new mysqli('172.16.131.125','z_bvc','oiu','z_bvc');
+        $sql = $conn -> query('select * from pracownicy');
+        echo('<table border = 1>');
+        echo('<tr>');
+        echo('<th>id</th>');
+        echo('<th>imie</th>');
+        echo('<th>dzial</th>');
+        echo('<th>zarobki</th>');
+        echo('<th>data_urodzenia</th>');
+        echo('<th>del</th>');
+        echo('</tr>');
+        while($row = $sql -> fetch_assoc()){
+            echo("<tr>");
+            echo("<td>".$row['id_pracownicy']."</td>");
+            echo("<td>".$row['imie']."</td>");
+            echo("<td>".$row['dzial']."</td>");
+            echo("<td>".$row['zarobki']."</td>");
+            echo("<td>".$row['data_urodzenia']."</td>");
+            echo("<td>");
+            echo("<form action='del.php' method='POST'>");
+            echo('<input class="hide"type="text" name="del" value='.$row["id_pracownicy"].'>');
+            echo('<input type="submit" value="X"');
+            echo('</form>');
+            echo("</td>");
+            echo('</tr>');
+        }
+        echo('</table>');
+        ?>
+    </main>
+</body>
+</html>
